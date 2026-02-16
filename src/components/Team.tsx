@@ -1,6 +1,3 @@
-import { MoveRight, PhoneCall } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Skiper54 } from "./skiper54";
 export default function Hero() {
   return (

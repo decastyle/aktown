@@ -1,7 +1,7 @@
 import Autoplay from "embla-carousel-autoplay";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { cn } from "@/lib/utils";
 import type { CarouselApi } from "@/components/ui/carousel";
@@ -132,7 +132,7 @@ const Skiper54 = () => {
 };
 
 interface Carousel_006Props {
-  images: { src: string; alt: string; title: string }[];
+  images: { src: string; alt: string; title: string; job: string}[];
   className?: string;
   autoplay?: boolean;
   loop?: boolean;

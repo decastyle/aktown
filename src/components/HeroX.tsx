@@ -36,7 +36,7 @@ const textShadowStyle = "0 4px 8px rgba(0,0,0,0.1), 0 2px 4px rgba(0,0,0,0.1), 0
 
 export default function Hero5() {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [prevIndex, setPrevIndex] = useState(null);
+  const [prevIndex, setPrevIndex] = useState<number | null>(null);
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -68,7 +68,6 @@ export default function Hero5() {
           {/* Render all backgrounds, control visibility with opacity */}
           {PROJECTS.map((project, index) => {
             const isActive = currentIndex === index;
-            const isPrev = prevIndex === index;
 
             return (
               <motion.div
