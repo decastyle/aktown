@@ -11,4 +11,5 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  base: "/aktown/" /* TODO: remove when changing domain name to custom one */
 });
