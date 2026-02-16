@@ -36,11 +36,9 @@ const textShadowStyle = "0 4px 8px rgba(0,0,0,0.1), 0 2px 4px rgba(0,0,0,0.1), 0
 
 export default function Hero5() {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [prevIndex, setPrevIndex] = useState<number | null>(null);
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
-      setPrevIndex(currentIndex);
       setCurrentIndex((prev) => (prev + 1) % PROJECTS.length);
     }, 2000);
 
