@@ -1,17 +1,17 @@
-import AktownSlider from "./components/AktownSlider";
-import Navbar from "./components/Navbar_old";
-import { ThemeProvider } from "@/components/theme-provider";
-import Team from "./components/Team";
-import HeroX from "./components/HeroX";
+import MarqueeAktown from "./components/marquee-aktown";
+import Navbar from "./components/navbar";
+import { ThemeProvider } from "@/components/theme-provider/theme-provider";
+import Team from "./components/team";
+import HeroX from "./components/hero";
 import Footer from "./components/footer";
 function App() {
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <Navbar />
       <HeroX />
-      <AktownSlider reverse={true} />
+      <MarqueeAktown reverse={true} />
       <Team />
-      <AktownSlider reverse={false} />
+      <MarqueeAktown reverse={false} />
       <Footer />
     </ThemeProvider>
   );

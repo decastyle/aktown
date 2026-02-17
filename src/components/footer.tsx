@@ -9,7 +9,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import LogoAktown from "./LogoAktown";
+import LogoAktown from "./logo-aktown";
 
 const CONTACTS = {
   email: "info@aktown.kz",
@@ -71,7 +71,7 @@ const Footer = () => {
                   href={`tel:${CONTACTS.phone.replace(/[^\d+]/g, "")}`}
                   className="flex items-center gap-2 text-sm hover:text-primary transition-colors"
                 >
-                  <PhoneVolume className="h-4 w-4 flex-shrink-0" />
+                  <PhoneVolume className="max-h-5 max-w-4 flex-shrink-0" />
                   <span>{CONTACTS.phone}</span>
                 </a>
               </div>
