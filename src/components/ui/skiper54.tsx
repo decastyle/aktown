@@ -191,7 +191,7 @@ const Carousel_006 = ({
               animate={{
                 clipPath:
                   current !== index
-                    ? "inset(15% 0% 0% 0 round 1rem)"
+                    ? "inset(0% 0% 0% 0 round 1rem)"
                     : "inset(0 0 0 0 round 1rem)",
               }}
               className="h-full w-full overflow-hidden rounded-3xl"
