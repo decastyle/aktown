@@ -121,7 +121,9 @@ export default function Hero() {
               />
               <span
                 className="font-[Kinetika] text-4xl text-white whitespace-nowrap"
-                style={{ textShadow: textShadowStyle }}
+                style={{ 
+                  textShadow: textShadowStyle,
+                }}
               >
                 AKTOWN
               </span>

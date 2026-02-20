@@ -42,11 +42,11 @@ const Footer = () => {
   return (
     <footer className="border-t">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid gap-12 py-12 lg:grid-cols-2 lg:gap-16">
+        <div className="grid gap-12 py-12 lg:grid-cols-2 lg:gap-16 ">
           {/* Left Column - Info */}
-          <div className="flex flex-col gap-16 ">
+          <div className="flex flex-col gap-16">
             {/* Logo */}
-            <div className="flex flex-row lg:justify-start justify-center">
+            <div className="flex flex-row lg:justify-start justify-center py-2">
               <LogoAktown margin={0} />
             </div>
 

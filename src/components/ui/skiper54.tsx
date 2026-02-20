@@ -3,7 +3,22 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useEffect, useState } from "react";
 
-import arsenImg from "../../assets/arsen.jpeg"; 
+import abzalImg from "../../assets/team-members/abzal.png";
+import aidanaImg from "../../assets/team-members/aidana.png";
+import ailanaImg from "../../assets/team-members/ailana.png";
+import amirImg from "../../assets/team-members/amir.png";
+import askhatImg from "../../assets/team-members/askhat.png";
+import bekbolatImg from "../../assets/team-members/bekbolat.png";
+import dilnapeImg from "../../assets/team-members/dilnape.png";
+import evelinaImg from "../../assets/team-members/evelina.png";
+import guldanaImg from "../../assets/team-members/guldana.png";
+import islamImg from "../../assets/team-members/islam.png";
+import karakatImg from "../../assets/team-members/karakat.png";
+import nurlybekImg from "../../assets/team-members/nurlybek.png";
+import nursultanImg from "../../assets/team-members/nursultan.png";
+import sagynyshImg from "../../assets/team-members/sagynysh.png";
+import veronikaImg from "../../assets/team-members/veronika.png";
+import yerkebulanImg from "../../assets/team-members/yerkebulan.png";
 
 import { cn } from "@/lib/utils";
 import type { CarouselApi } from "@/components/ui/carousel";
@@ -16,103 +31,103 @@ import {
 const Skiper54 = () => {
   const images = [
     {
-      src: arsenImg, 
+      src: abzalImg, 
       alt: "Portrait image of a man standing in a costume",
       title: "Arsen",
       job: "Motion Designer",
     },
     {
-      src: arsenImg, 
+      src: nursultanImg, 
       alt: "Illustrations by ©AarzooAly",
       title: "Nursultan",
       job: "Founder",
     },
     {
-      src: arsenImg, 
+      src: guldanaImg, 
       alt: "Illustrations by ©AarzooAly",
       title: "Guldana",
       job: "Marketing Manager",
     },
     {
-      src: arsenImg, 
+      src: nurlybekImg, 
       alt: "Illustrations by ©AarzooAly",
       title: "Nurlybek",
       job: "VFX / Motion Designer",
     },
     {
-      src: arsenImg, 
+      src: askhatImg, 
       alt: "Illustrations by ©AarzooAly",
       title: "Askhat",
       job: "Music Artist",
     },
     {
-      src: arsenImg, 
+      src: bekbolatImg, 
       alt: "Illustrations by ©AarzooAly",
       title: "Bekbolat",
       job: "Mobilographer",
     },
     {
-      src: arsenImg, 
+      src: islamImg, 
       alt: "Illustrations by ©AarzooAly",
       title: "Islam",
       job: "Music Artist / Sound Designer",
     },
     {
-      src: arsenImg, 
+      src: sagynyshImg, 
       alt: "Illustrations by ©AarzooAly",
       title: "Sagynysh",
       job: "Graphic Designer",
     },
     {
-      src: arsenImg, 
+      src: aidanaImg, 
       alt: "Illustrations by ©AarzooAly",
       title: "Aidana",
       job: "Event Manager",
     },
     {
-      src: arsenImg, 
+      src: veronikaImg, 
       alt: "Illustrations by ©AarzooAly",
       title: "Veronika",
       job: "Dancer",
     },
     {
-      src: arsenImg, 
+      src: abzalImg, 
       alt: "Illustrations by ©AarzooAly",
       title: "Abzal",
       job: "Music Artist",
     },
     {
-      src: arsenImg, 
+      src: evelinaImg, 
       alt: "Illustrations by ©AarzooAly",
       title: "Evelina",
       job: "Dancer",
     },
     {
-      src: arsenImg, 
+      src: dilnapeImg, 
       alt: "Illustrations by ©AarzooAly",
       title: "Dilnape",
       job: "Event Manager",
     },
     {
-      src: arsenImg, 
+      src: ailanaImg, 
       alt: "Illustrations by ©AarzooAly",
       title: "Ailana",
       job: "Music Artist",
     },
     {
-      src: arsenImg, 
+      src: amirImg, 
       alt: "Illustrations by ©AarzooAly",
       title: "Amir",
       job: "Music Artist",
     },
     {
-      src: arsenImg, 
+      src: karakatImg, 
       alt: "Illustrations by ©AarzooAly",
       title: "Karakat",
       job: "Copywriter",
     },
     {
-      src: arsenImg, 
+      src: yerkebulanImg, 
       alt: "Illustrations by ©AarzooAly",
       title: "Yerkebulan",
       job: "Videographer",
