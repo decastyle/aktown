@@ -1,7 +1,7 @@
 import Autoplay from "embla-carousel-autoplay";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import abzalImg from "../../assets/team-members/abzal.png";
 import aidanaImg from "../../assets/team-members/aidana.png";
@@ -19,6 +19,9 @@ import nursultanImg from "../../assets/team-members/nursultan.png";
 import sagynyshImg from "../../assets/team-members/sagynysh.png";
 import veronikaImg from "../../assets/team-members/veronika.png";
 import yerkebulanImg from "../../assets/team-members/yerkebulan.png";
+import arsenImg from "../../assets/team-members/arsen.png";
+
+import Logo from "../../assets/aktown-logo.png";
 
 import { cn } from "@/lib/utils";
 import type { CarouselApi } from "@/components/ui/carousel";
@@ -31,103 +34,103 @@ import {
 const Skiper54 = () => {
   const images = [
     {
-      src: abzalImg, 
+      src: arsenImg,
       alt: "Portrait image of a man standing in a costume",
       title: "Arsen",
       job: "Motion Designer",
     },
     {
-      src: nursultanImg, 
+      src: nursultanImg,
       alt: "Illustrations by ©AarzooAly",
       title: "Nursultan",
       job: "Founder",
     },
     {
-      src: guldanaImg, 
+      src: guldanaImg,
       alt: "Illustrations by ©AarzooAly",
       title: "Guldana",
       job: "Marketing Manager",
     },
     {
-      src: nurlybekImg, 
+      src: nurlybekImg,
       alt: "Illustrations by ©AarzooAly",
       title: "Nurlybek",
       job: "VFX / Motion Designer",
     },
     {
-      src: askhatImg, 
+      src: askhatImg,
       alt: "Illustrations by ©AarzooAly",
       title: "Askhat",
       job: "Music Artist",
     },
     {
-      src: bekbolatImg, 
+      src: bekbolatImg,
       alt: "Illustrations by ©AarzooAly",
       title: "Bekbolat",
       job: "Mobilographer",
     },
     {
-      src: islamImg, 
+      src: islamImg,
       alt: "Illustrations by ©AarzooAly",
       title: "Islam",
       job: "Music Artist / Sound Designer",
     },
     {
-      src: sagynyshImg, 
+      src: sagynyshImg,
       alt: "Illustrations by ©AarzooAly",
       title: "Sagynysh",
       job: "Graphic Designer",
     },
     {
-      src: aidanaImg, 
+      src: aidanaImg,
       alt: "Illustrations by ©AarzooAly",
       title: "Aidana",
       job: "Event Manager",
     },
     {
-      src: veronikaImg, 
+      src: veronikaImg,
       alt: "Illustrations by ©AarzooAly",
       title: "Veronika",
       job: "Dancer",
     },
     {
-      src: abzalImg, 
+      src: abzalImg,
       alt: "Illustrations by ©AarzooAly",
       title: "Abzal",
       job: "Music Artist",
     },
     {
-      src: evelinaImg, 
+      src: evelinaImg,
       alt: "Illustrations by ©AarzooAly",
       title: "Evelina",
       job: "Dancer",
     },
     {
-      src: dilnapeImg, 
+      src: dilnapeImg,
       alt: "Illustrations by ©AarzooAly",
       title: "Dilnape",
       job: "Event Manager",
     },
     {
-      src: ailanaImg, 
+      src: ailanaImg,
       alt: "Illustrations by ©AarzooAly",
       title: "Ailana",
       job: "Music Artist",
     },
     {
-      src: amirImg, 
+      src: amirImg,
       alt: "Illustrations by ©AarzooAly",
       title: "Amir",
       job: "Music Artist",
     },
     {
-      src: karakatImg, 
+      src: karakatImg,
       alt: "Illustrations by ©AarzooAly",
       title: "Karakat",
       job: "Copywriter",
     },
     {
-      src: yerkebulanImg, 
+      src: yerkebulanImg,
       alt: "Illustrations by ©AarzooAly",
       title: "Yerkebulan",
       job: "Videographer",
@@ -135,14 +138,16 @@ const Skiper54 = () => {
   ];
   return (
     <div className="flex h-full w-screen items-center justify-center overflow-hidden">
-      <Carousel_006
-        images={images}
-        className=""
-        autoplay={true}
-        loop={true}
-        showNavigation={false}
-        showPagination={false}
-      />
+      <div className="w-full">
+        <Carousel_006
+          images={images}
+          className=""
+          autoplay={true}
+          loop={true}
+          showNavigation={false}
+          showPagination={false}
+        />
+      </div>
     </div>
   );
 };
@@ -167,57 +172,92 @@ const Carousel_006 = ({
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
 
+  const autoplayPluginRef = useRef(
+    Autoplay({
+      delay: 2000,
+      stopOnInteraction: false,
+      stopOnMouseEnter: true,
+    }),
+  );
+
+  const resumeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
   useEffect(() => {
     if (!api) return;
 
     api.on("select", () => {
       setCurrent(api.selectedScrollSnap());
     });
-  }, [api]);
+
+    if (autoplay) {
+      const handlePointerDown = () => {
+        autoplayPluginRef.current.stop();
+        if (resumeTimerRef.current) {
+          clearTimeout(resumeTimerRef.current);
+          resumeTimerRef.current = null;
+        }
+      };
+
+      const handlePointerUp = () => {
+        if (resumeTimerRef.current) clearTimeout(resumeTimerRef.current);
+        resumeTimerRef.current = setTimeout(() => {
+          autoplayPluginRef.current.play();
+        }, 3000);
+      };
+
+      api.on("pointerDown", handlePointerDown);
+      api.on("pointerUp", handlePointerUp);
+
+      return () => {
+        api.off("pointerDown", handlePointerDown);
+        api.off("pointerUp", handlePointerUp);
+        if (resumeTimerRef.current) clearTimeout(resumeTimerRef.current);
+      };
+    }
+  }, [api, autoplay]);
 
   return (
     <Carousel
       setApi={setApi}
-      className={cn("w-full", className)}
+      className={cn("relative w-full", className)}
       opts={{
         loop,
         slidesToScroll: 1,
+        dragFree: true,
       }}
-      plugins={
-        autoplay
-          ? [
-              Autoplay({
-                delay: 2000,
-                stopOnInteraction: true,
-                stopOnMouseEnter: false,
-              }),
-            ]
-          : []
-      }
+      plugins={autoplay ? [autoplayPluginRef.current] : []}
     >
       <CarouselContent className="flex h-[500px] w-full">
         {images.map((img, index) => (
           <CarouselItem
             key={index}
             className="relative flex flex-col h-[100%] w-full basis-[73%] justify-center sm:basis-[50%] md:basis-[30%] lg:basis-[25%] xl:basis-[21%]"
+            style={{ maxWidth: "calc(500px * 0.7)" }}
           >
             <motion.div
               initial={false}
               animate={{
                 clipPath:
                   current !== index
-                    ? "inset(0% 0% 0% 0 round 1rem)"
+                    ? "inset(5% 0% 0% 0 round 1rem)"
                     : "inset(0 0 0 0 round 1rem)",
               }}
-              className="h-full w-full overflow-hidden rounded-3xl"
+              className="h-full w-full rounded-3xl"
             >
-              <div className="relative h-full w-full border">
+              <div className="relative h-full w-full border bg-[#fafafa] scale-101">
+                {/* Logo sits on top of white bg but behind the photo */}
+                <img
+                  src={Logo}
+                  alt=""
+                  aria-hidden="true"
+                  className="pointer-events-none select-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-[50%] w-auto object-contain z-10 invert"
+                />
+                {/* Photo renders on top of the logo */}
                 <img
                   src={img.src}
                   alt={img.alt}
-                  className="h-full w-full scale-101 object-cover"
+                  className="absolute inset-0 h-full w-full scale-101 object-cover object-top z-20"
                 />
-                <div></div>
               </div>
             </motion.div>
             <AnimatePresence mode="wait">
@@ -233,10 +273,10 @@ const Carousel_006 = ({
               )}
             </AnimatePresence>
 
-            <div className="mt-2 text-2xl max-w-xl font-regular font-[Kinetika]">
+            <div className="mt-2 text-2xl max-w-xl font-regular font-[Kinetika] pointer-events-none select-none">
               {img.title}
             </div>
-            <div className=" text-base max-w-xl font-regular font-[Kinetika] ">
+            <div className="text-base max-w-xl font-regular font-[Kinetika] pointer-events-none select-none">
               {img.job}
             </div>
           </CarouselItem>
