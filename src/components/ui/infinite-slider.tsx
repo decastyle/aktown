@@ -1,6 +1,6 @@
 "use client";
 import { cn } from "@/lib/utils";
-import { useId } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export type InfiniteSliderProps = {
   children: React.ReactNode;
@@ -12,96 +12,112 @@ export type InfiniteSliderProps = {
   className?: string;
 };
 
-// How many copies to render. 6 is enough to fill any reasonable viewport.
-// CSS handles the loop — no JS measurement needed.
-const COPIES = 6;
-
 export function InfiniteSlider({
   children,
   gap = 16,
-  speed = 5,
+  speed = 50,
   speedOnHover,
   direction = "horizontal",
   reverse = false,
   className,
 }: InfiniteSliderProps) {
-  // Unique id so multiple sliders on the same page don't share keyframe names
-  const id = useId().replace(/:/g, "");
+  const contentRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [copies, setCopies] = useState(2);
+  const [contentSize, setContentSize] = useState(0);
+  const animRef = useRef<Animation | null>(null);
   const isHorizontal = direction === "horizontal";
 
-  // We can't know content size at CSS time, so we use a trick:
-  // animate by exactly 1/COPIES of the total track width (translateX(-1/6 * 100%)).
-  // Since all copies are identical, this creates a seamless loop.
-  // const durationSeconds = speed
-  //   ? undefined // calculated below
-  //   : 10;
+  // Measure and compute how many copies we need to fill the container
+  useEffect(() => {
+    if (!contentRef.current || !containerRef.current) return;
 
-  // Speed is in px/s but we don't know content width at CSS time.
-  // Instead expose a `duration` prop approach: default 20s looks good,
-  // and users can pass `speed` as seconds directly (rename semantics below).
-  // If you need true px/s control, switch to the JS version.
-  const duration = `${speed}s`;
+    const measure = () => {
+      const content = contentRef.current!;
+      const container = containerRef.current!;
+      const cSize = isHorizontal ? content.offsetWidth : content.offsetHeight;
+      const vSize = isHorizontal ? container.offsetWidth : container.offsetHeight;
+      if (cSize === 0) return;
+      setContentSize(cSize + gap);
+      // Enough copies to fill viewport twice (so the loop never shows a gap)
+      const needed = Math.ceil((vSize * 2) / cSize) + 2;
+      setCopies(Math.max(4, needed));
+    };
 
-  const animationName = `infinite-slider-${id}`;
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(containerRef.current);
+    ro.observe(contentRef.current);
+    return () => ro.disconnect();
+  }, [isHorizontal, gap, children]);
 
-  const keyframes = isHorizontal
-    ? `@keyframes ${animationName} {
-        from { transform: translateX(0); }
-        to   { transform: translateX(calc(-100% / ${COPIES})); }
-      }`
-    : `@keyframes ${animationName} {
-        from { transform: translateY(0); }
-        to   { transform: translateY(calc(-100% / ${COPIES})); }
-      }`;
+  // Web Animations API — no external deps, perfectly smooth
+  useEffect(() => {
+    if (!containerRef.current || contentSize === 0) return;
 
-  const hoverStyle = speedOnHover
-    ? `#slider-${id}:hover > .slider-track {
-        animation-duration: ${speedOnHover}s;
-      }`
-    : "";
+    const track = containerRef.current.querySelector<HTMLElement>(".inf-track");
+    if (!track) return;
+
+    const from = reverse ? -contentSize : 0;
+    const to = reverse ? 0 : -contentSize;
+    const duration = (Math.abs(to - from) / speed) * 1000;
+
+    animRef.current?.cancel();
+    animRef.current = track.animate(
+      isHorizontal
+        ? [{ transform: `translateX(${from}px)` }, { transform: `translateX(${to}px)` }]
+        : [{ transform: `translateY(${from}px)` }, { transform: `translateY(${to}px)` }],
+      { duration, iterations: Infinity, easing: "linear" }
+    );
+
+    return () => animRef.current?.cancel();
+  }, [contentSize, speed, isHorizontal, reverse, copies]);
+
+  const handleMouseEnter = () => {
+    if (speedOnHover && animRef.current) {
+      animRef.current.updatePlaybackRate(speed / speedOnHover);
+    }
+  };
+  const handleMouseLeave = () => {
+    if (speedOnHover && animRef.current) {
+      animRef.current.updatePlaybackRate(1);
+    }
+  };
 
   return (
-    <>
-      <style>{`
-        ${keyframes}
-        ${hoverStyle}
-        #slider-${id} > .slider-track {
-          animation: ${animationName} ${duration} linear infinite ${reverse ? "reverse" : "normal"};
-          /* GPU composite layer — no layout recalc on every frame */
-          will-change: transform;
-        }
-      `}</style>
-
+    <div
+      ref={containerRef}
+      className={cn("overflow-hidden", className)}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
       <div
-        id={`slider-${id}`}
-        className={cn("overflow-hidden", className)}
+        className="inf-track flex"
+        style={{
+          flexDirection: isHorizontal ? "row" : "column",
+          gap: `${gap}px`,
+          width: isHorizontal ? "max-content" : undefined,
+          willChange: "transform",
+        }}
       >
-        {/* Single track containing all copies. Animating the track as one
-            unit means the browser never needs to remeasure children. */}
         <div
-          className="slider-track flex center"
-          style={{
-            flexDirection: isHorizontal ? "row" : "column",
-            gap: `${gap}px`,
-            // Width must be auto so it grows to fit all copies
-            width: isHorizontal ? "max-content" : undefined,
-          }}
+          ref={contentRef}
+          className="flex"
+          style={{ flexDirection: isHorizontal ? "row" : "column", gap: `${gap}px`, flexShrink: 0 }}
         >
-          {Array.from({ length: COPIES }).map((_, i) => (
-            <div
-              key={i}
-              className="flex"
-              style={{
-                flexDirection: isHorizontal ? "row" : "column",
-                gap: `${gap}px`,
-                flexShrink: 0,
-              }}
-            >
-              {children}
-            </div>
-          ))}
+          {children}
         </div>
+        {Array.from({ length: copies - 1 }).map((_, i) => (
+          <div
+            key={i}
+            aria-hidden
+            className="flex"
+            style={{ flexDirection: isHorizontal ? "row" : "column", gap: `${gap}px`, flexShrink: 0 }}
+          >
+            {children}
+          </div>
+        ))}
       </div>
-    </>
+    </div>
   );
 }

@@ -2,6 +2,7 @@
 @import "../src/fonts/kinetika/stylesheet.css";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
+@import "./fonts/neue-haas-grotesk-display-pro/style.css";
 
 @custom-variant dark (&:is(.dark *));
 

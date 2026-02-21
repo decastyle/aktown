@@ -42,20 +42,20 @@ const Footer = () => {
   return (
     <footer className="border-t">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid gap-12 py-12 lg:grid-cols-2 lg:gap-16 ">
+        <div className="grid gap-12 py-4 lg:grid-cols-2 lg:gap-16 ">
           {/* Left Column - Info */}
-          <div className="flex flex-col gap-16">
+          <div className="flex flex-col gap-12 pt-8">
             {/* Logo */}
-            <div className="flex flex-row lg:justify-start justify-center py-2">
+            <div className="flex flex-row lg:justify-start justify-center py-4">
               <LogoAktown margin={0} />
             </div>
 
             {/* Contacts */}
-            <div className="flex flex-col gap-2 items-center lg:items-start">
+            <div className="flex flex-col gap-4 items-start lg:items-start">
               <h3 className="font-[Kinetika] text-2xl font-medium tracking-tight">
                 КОНТАКТЫ
               </h3>
-              <p className="text-muted-foreground leading-7">
+              <p className="text-foreground leading-normal ">
                 Свяжитесь с нами по вопросам партнерства, продакшна и букинга
                 артистов.
               </p>
@@ -78,7 +78,7 @@ const Footer = () => {
             </div>
 
             {/* Social Links */}
-            <div className="flex flex-col gap-4 lg:items-start items-center">
+            <div className="flex flex-col gap-4 lg:items-start items-end">
               <h3 className="font-[Kinetika] text-2xl font-medium tracking-tight">
                 СОЦ.СЕТИ
               </h3>

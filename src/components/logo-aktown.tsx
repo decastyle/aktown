@@ -9,7 +9,8 @@ export default function LogoAktown({ margin }: { margin: number }) {
         className={`m-${margin} mr-0 w-6 dark:invert-0 invert`}
         alt="Aktown Logo"
       />
-      <div className="font-medium text-primary font-[Kinetika]">AKTOWN</div>
+      <div className="font-regular text-primary font-[NeueHaasDisplay]"  >AKTOWN</div>
+        {/* style={{ transform: "translateY(2px)" }} */}
     </a>
   );
 }
