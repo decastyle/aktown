@@ -79,7 +79,7 @@ export function InfiniteSlider({
         {/* Single track containing all copies. Animating the track as one
             unit means the browser never needs to remeasure children. */}
         <div
-          className="slider-track flex"
+          className="slider-track flex center"
           style={{
             flexDirection: isHorizontal ? "row" : "column",
             gap: `${gap}px`,
