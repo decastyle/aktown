@@ -21,7 +21,8 @@ import veronikaImg from "../../assets/team-members/veronika.png";
 import yerkebulanImg from "../../assets/team-members/yerkebulan.png";
 import arsenImg from "../../assets/team-members/arsen.png";
 
-import Logo from "../../assets/aktown-logo.png";
+// import Logo from "../../assets/aktown-logo.png";
+import AktownLogo from "../../assets/svg/aktown.svg";
 
 import { cn } from "@/lib/utils";
 import type { CarouselApi } from "@/components/ui/carousel";
@@ -247,7 +248,7 @@ const Carousel_006 = ({
               <div className="relative h-full w-full border bg-[#fafafa] scale-101">
                 {/* Logo sits on top of white bg but behind the photo */}
                 <img
-                  src={Logo}
+                  src={AktownLogo}
                   alt=""
                   aria-hidden="true"
                   className="pointer-events-none select-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-[50%] w-auto object-contain z-10 invert"
