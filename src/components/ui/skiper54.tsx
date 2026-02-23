@@ -28,23 +28,23 @@ import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carouse
 // ─── Constants ───────────────────────────────────────────────────────────────
 
 const TEAM_MEMBERS: TeamMember[] = [
-  { src: arsenImg,      title: "Arsen",      job: "Motion Designer" },
-  { src: nursultanImg,  title: "Nursultan",  job: "Founder" },
-  { src: guldanaImg,    title: "Guldana",    job: "Marketing Manager" },
-  { src: nurlybekImg,   title: "Nurlybek",   job: "VFX / Motion Designer" },
-  { src: askhatImg,     title: "Askhat",     job: "Music Artist" },
-  { src: bekbolatImg,   title: "Bekbolat",   job: "Mobilographer" },
-  { src: islamImg,      title: "Islam",      job: "Music Artist / Sound Designer" },
-  { src: sagynyshImg,   title: "Sagynysh",   job: "Graphic Designer" },
-  { src: aidanaImg,     title: "Aidana",     job: "Event Manager" },
-  { src: veronikaImg,   title: "Veronika",   job: "Dancer" },
-  { src: abzalImg,      title: "Abzal",      job: "Music Artist" },
-  { src: evelinaImg,    title: "Evelina",    job: "Dancer" },
-  { src: dilnapeImg,    title: "Dilnape",    job: "Event Manager" },
-  { src: ailanaImg,     title: "Ailana",     job: "Music Artist" },
-  { src: amirImg,       title: "Amir",       job: "Music Artist" },
-  { src: karakatImg,    title: "Karakat",    job: "Copywriter" },
-  { src: yerkebulanImg, title: "Yerkebulan", job: "Videographer" },
+  { src: arsenImg,      title: "Arsen",      job: "Motion Designer", nickname: "decastyled"},         
+  { src: nursultanImg,  title: "Nursultan",  job: "Founder" , nickname: "n.murzabek"},
+  { src: guldanaImg,    title: "Guldana",    job: "Marketing Manager", nickname: "guldana_zholdybay" },
+  { src: nurlybekImg,   title: "Nurlybek",   job: "VFX / Motion Designer" , nickname: "cuzgladiolus.exe"},
+  { src: askhatImg,     title: "Askhat",     job: "Music Artist" , nickname: "_askhat.m"},
+  { src: bekbolatImg,   title: "Bekbolat",   job: "Mobilographer" , nickname: "jalgaso_0"},
+  { src: islamImg,      title: "Islam",      job: "Music Artist / Sound Designer" , nickname: "oiuuornek"},
+  { src: sagynyshImg,   title: "Sagynysh",   job: "Graphic Designer" , nickname: "kaiyrbai_sagynysh"},
+  { src: aidanaImg,     title: "Aidana",     job: "Event Manager" , nickname: "_aidana_u"},
+  { src: veronikaImg,   title: "Veronika",   job: "Dancer" , nickname: "ggotthiiic"},
+  { src: abzalImg,      title: "Abzal",      job: "Music Artist" , nickname: "qqantar"},
+  { src: evelinaImg,    title: "Evelina",    job: "Dancer" , nickname: "evelisv_"},
+  { src: dilnapeImg,    title: "Dilnape",    job: "Event Manager" , nickname: ""},
+  { src: ailanaImg,     title: "Ailana",     job: "Music Artist" , nickname: "aiilosh"},
+  { src: amirImg,       title: "Amir",       job: "Music Artist" , nickname: "out.qu"},
+  { src: karakatImg,    title: "Karakat",    job: "Copywriter" , nickname: "knarrahaz"},
+  { src: yerkebulanImg, title: "Yerkebulan", job: "Videographer" , nickname: "qqantar"},
 ];
 
 // ─── Types ───────────────────────────────────────────────────────────────────
@@ -53,6 +53,7 @@ interface TeamMember {
   src: string;
   title: string;
   job: string;
+  nickname: string;
 }
 
 interface TeamCarouselProps {
@@ -86,23 +87,25 @@ const TeamCard = React.memo(({ img, isActive, eager }: CardProps) => (
       transition={{ duration: 0.4, ease: "easeOut" }}
       className="h-full w-full rounded-3xl"
     >
-      <div className="relative h-full w-full border bg-[#fafafa] scale-101">
-        {/* Watermark logo — behind photo */}
-        <img
-          src={AktownLogo}
-          alt=""
-          aria-hidden="true"
-          className="pointer-events-none select-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-1/2 w-auto object-contain z-10 invert"
-        />
-        {/* Member photo */}
-        <img
-          src={img.src}
-          alt={`Portrait of ${img.title}`}
-          className="absolute inset-0 h-full w-full scale-101 object-cover object-top z-20"
-          loading={eager ? "eager" : "lazy"}
-          decoding="async"
-        />
-      </div>
+      <a href={`https://www.instagram.com/${img.nickname}/`}>
+        <div className="relative h-full w-full border bg-[#fafafa] scale-101">
+          {/* Watermark logo — behind photo */}
+          <img
+            src={AktownLogo}
+            alt=""
+            aria-hidden="true"
+            className="pointer-events-none select-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-1/2 w-auto object-contain z-10 invert"
+          />
+          {/* Member photo */}
+          <img
+            src={img.src}
+            alt={`Portrait of ${img.title}`}
+            className="absolute inset-0 h-full w-full scale-101 object-cover object-top z-20"
+            loading={eager ? "eager" : "lazy"}
+            decoding="async"
+          />
+        </div>
+      </a>
     </motion.div>
 
     {/* Name + role */}

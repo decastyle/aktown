@@ -75,7 +75,7 @@ const AktownBrand = memo(({ mobile }: { mobile: boolean }) =>
       <div className="flex items-center justify-center">
         <img src={AktownLogo} className={`w-10 h-10 mr-2 ${shadowClasses}`} alt="Aktown Logo" />
         <span
-          className="font-[Kinetika] text-4xl text-white whitespace-nowrap"
+          className="font-[Gilroy] text-4xl text-white whitespace-nowrap"
           style={{ textShadow: textShadowStyle, transform: "translateY(-2px)" }}
         >
           AKTOWN
@@ -86,7 +86,7 @@ const AktownBrand = memo(({ mobile }: { mobile: boolean }) =>
     <div className="flex items-center justify-end w-[280px] lg:w-[420px]">
       <img src={AktownLogo} className={`w-12 h-12 lg:w-32 lg:h-32 mr-3 lg:mr-4 ${shadowClasses}`} alt="Aktown Logo" />
       <span
-        className="font-[Kinetika] text-5xl lg:text-7xl text-white whitespace-nowrap"
+        className="font-[Gilroy] text-5xl lg:text-7xl text-white whitespace-nowrap"
         style={{ textShadow: textShadowStyle, transform: "translateY(-2px)" }}
       >
         AKTOWN

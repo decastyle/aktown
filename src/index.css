@@ -3,6 +3,8 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 @import "./fonts/neue-haas-grotesk-display-pro/style.css";
+@import "./fonts/gilroy/stylesheet.css";
+
 
 @custom-variant dark (&:is(.dark *));
 
