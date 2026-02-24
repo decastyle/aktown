@@ -4,6 +4,8 @@ import { ThemeProvider } from "@/components/theme-provider/theme-provider";
 import Team from "./components/team";
 import HeroX from "./components/hero";
 import Footer from "./components/footer";
+import ProjectsGallery from "./components/projects-gallery";
+
 function App() {
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
@@ -11,6 +13,7 @@ function App() {
       <HeroX />
       <MarqueeAktown reverse={true} />
       <Team />
+      <ProjectsGallery />
       <MarqueeAktown reverse={false} />
       <Footer />
     </ThemeProvider>
