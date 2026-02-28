@@ -1,0 +1,9 @@
+[[redirects]]
+  from = "/index.php/elementor-297"
+  to = "/birauyl"
+  status = 301
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
