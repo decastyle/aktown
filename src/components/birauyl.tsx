@@ -22,6 +22,7 @@ function useThreeBox(canvasRef: React.RefObject<HTMLCanvasElement | null>, logoS
     // ── Renderer ──
     const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
     const W = canvas.clientWidth, H = canvas.clientHeight;
     renderer.setSize(W, H, false);
 
@@ -73,6 +74,7 @@ function useThreeBox(canvasRef: React.RefObject<HTMLCanvasElement | null>, logoS
     ctx.fillText("КАРТОЧНАЯ ИГРА", 256, 685);
 
     const faceTex = new THREE.CanvasTexture(faceCanvas);
+    faceTex.colorSpace = THREE.SRGBColorSpace;
 
     const logoImg = new Image();
     logoImg.crossOrigin = "anonymous";
