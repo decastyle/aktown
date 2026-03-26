@@ -1,8 +1,20 @@
-import { createRootRoute, createRoute, Outlet } from "@tanstack/react-router";
+import { createRootRoute, createRoute, Outlet } from '@tanstack/react-router';
 import App from "./App";
 import BirAuyl from "./components/birauyl";
+import { ThemeProvider } from '@/components/theme-provider/theme-provider';
+import { LangProvider } from './i18n';
 
-const rootRoute = createRootRoute({ component: Outlet });
+function RootLayout() {
+  return (
+    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+      <LangProvider>
+        <Outlet />
+      </LangProvider>
+    </ThemeProvider>
+  );
+}
+
+const rootRoute = createRootRoute({ component: RootLayout });
 
 const indexRoute = createRoute({
   getParentRoute: () => rootRoute,
