@@ -25,8 +25,6 @@ import { cn } from "@/lib/utils";
 import type { CarouselApi } from "@/components/ui/carousel";
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 
-// ─── Constants ───────────────────────────────────────────────────────────────
-
 const TEAM_MEMBERS: TeamMember[] = [
   { src: arsenImg,      title: "Arsen",      job: "Motion Designer", nickname: "decastyled"},         
   { src: nursultanImg,  title: "Nursultan",  job: "Founder" , nickname: "n.murzabek"},
@@ -47,8 +45,6 @@ const TEAM_MEMBERS: TeamMember[] = [
   { src: yerkebulanImg, title: "Yerkebulan", job: "Videographer" , nickname: "qqantar"},
 ];
 
-// ─── Types ───────────────────────────────────────────────────────────────────
-
 interface TeamMember {
   src: string;
   title: string;
@@ -63,8 +59,6 @@ interface TeamCarouselProps {
   loop?: boolean;
 }
 
-// ─── Card ────────────────────────────────────────────────────────────────────
-
 interface CardProps {
   img: TeamMember;
   isActive: boolean;
@@ -76,7 +70,6 @@ const TeamCard = React.memo(({ img, isActive, eager }: CardProps) => (
     className="relative flex flex-col h-full basis-[73%] sm:basis-[50%] md:basis-[30%] lg:basis-[25%] xl:basis-[21%]"
     style={{ maxWidth: "calc(500px * 0.7)" }}
   >
-    {/* Photo card */}
     <motion.div
       initial={false}
       animate={{
@@ -89,14 +82,12 @@ const TeamCard = React.memo(({ img, isActive, eager }: CardProps) => (
     >
       <a href={`https://www.instagram.com/${img.nickname}/`}>
         <div className="relative h-full w-full border bg-[#fafafa] scale-101">
-          {/* Watermark logo — behind photo */}
           <img
             src={AktownLogo}
             alt=""
             aria-hidden="true"
             className="pointer-events-none select-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-1/2 w-auto object-contain z-10 invert"
           />
-          {/* Member photo */}
           <img
             src={img.src}
             alt={`Portrait of ${img.title}`}
@@ -108,8 +99,7 @@ const TeamCard = React.memo(({ img, isActive, eager }: CardProps) => (
       </a>
     </motion.div>
 
-    {/* Name + role */}
-    <div className="mt-2 pointer-events-none select-none font-[Kinetika]">
+    <div className="mt-2 pointer-events-none select-none">
       <p className="text-2xl font-medium leading-tight">{img.title}</p>
       <p className="text-base text-muted-foreground">{img.job}</p>
     </div>
@@ -117,8 +107,6 @@ const TeamCard = React.memo(({ img, isActive, eager }: CardProps) => (
 ));
 
 TeamCard.displayName = "TeamCard";
-
-// ─── Carousel ────────────────────────────────────────────────────────────────
 
 const TeamCarousel = ({
   images = TEAM_MEMBERS,
@@ -130,7 +118,6 @@ const TeamCarousel = ({
   const [current, setCurrent] = useState(0);
   const resumeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // Per-instance plugin — never shared across renders or multiple instances
   const autoplayPlugin = useMemo(
     () =>
       Autoplay({
@@ -193,8 +180,6 @@ const TeamCarousel = ({
     </Carousel>
   );
 };
-
-// ─── Page wrapper ─────────────────────────────────────────────────────────────
 
 const Skiper54 = () => (
   <div className="flex h-full w-screen items-center justify-center overflow-hidden">

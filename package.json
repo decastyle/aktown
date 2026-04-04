@@ -11,6 +11,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fontsource/golos-text": "^5.2.8",
     "@radix-ui/react-slot": "^1.2.4",
     "@radix-ui/react-visually-hidden": "^1.2.4",
     "@tailwindcss/vite": "^4.1.18",
@@ -26,10 +27,8 @@
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-use-measure": "^2.1.7",
-    "swiper": "^12.1.1",
     "tailwind-merge": "^3.4.0",
     "tailwindcss": "^4.1.18",
-    "three": "^0.183.2",
     "undici-types": "^7.22.0"
   },
   "devDependencies": {
@@ -37,7 +36,6 @@
     "@types/node": "^24.10.13",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
-    "@types/three": "^0.183.1",
     "@vitejs/plugin-react": "^5.1.1",
     "eslint": "^9.39.1",
     "eslint-plugin-react-hooks": "^7.0.1",

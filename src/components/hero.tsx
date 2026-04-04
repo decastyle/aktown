@@ -8,6 +8,7 @@ import ConnectBg from "../assets/connect-bg.png";
 import ConnectLogo from "../assets/svg/connect.svg";
 
 import BirAuylLogo from "../assets/birauyl-logo.png";
+// TODO: replace with Bir Auyl card game asset (currently shared with Talks slide background).
 import BirAuylBg from "../assets/talks-bg.png";
 
 import TalksLogo from "../assets/svg/talks.svg";
@@ -16,16 +17,12 @@ import TalksBg from "../assets/talks-bg.png";
 import JinalaiyqLogo from "../assets/svg/jinalaiyq.svg";
 import JinalaiyqBg from "../assets/jinalaiyq-bg.png";
 
-// ─── Types ────────────────────────────────────────────────────────────────────
-
 interface Project {
   id: string;
   logo: string;
   bgImage: string;
   scale?: number;
 }
-
-// ─── Constants ────────────────────────────────────────────────────────────────
 
 const PROJECTS: Project[] = [
   { id: "connect",     logo: ConnectLogo,   bgImage: ConnectBg,   scale: 1.0 },
@@ -42,8 +39,6 @@ const BASE_WIDTH_LG      = 360;
 
 const shadowClasses   = "drop-shadow-md drop-shadow-[0_0_20px_rgba(0,0,0,0.1)]";
 const textShadowStyle = "0 4px 8px rgba(0,0,0,0.1), 0 2px 4px rgba(0,0,0,0.1), 0 0 20px rgba(0,0,0,0.1)";
-
-// ─── Static sub-components ────────────────────────────────────────────────────
 
 const AktownSection = memo(() => (
   <div className="absolute top-0 left-0 right-0 h-1/2 md:right-1/2 md:h-full md:w-1/2">
@@ -96,11 +91,6 @@ const AktownBrand = memo(({ mobile }: { mobile: boolean }) =>
 );
 AktownBrand.displayName = "AktownBrand";
 
-// ─── Project backgrounds ──────────────────────────────────────────────────────
-// Sequential cross-fade: incoming fades in fully first (z-index 2),
-// outgoing snaps to opacity 0 only after incoming is done (delay = FADE_DURATION).
-// At no point are both slides semi-transparent simultaneously.
-
 const ProjectBackgrounds = memo(({ currentIndex }: { currentIndex: number }) => (
   <div className="absolute top-1/2 left-0 right-0 bottom-0 md:left-1/2 md:top-0 md:h-full md:w-1/2">
     {PROJECTS.map((project, index) => {
@@ -117,12 +107,10 @@ const ProjectBackgrounds = memo(({ currentIndex }: { currentIndex: number }) => 
           transition={
             isActive
               ? {
-                  // Incoming: fade in over FADE_DURATION, z-index jumps immediately
                   opacity: { duration: FADE_DURATION, ease: "easeInOut" },
                   zIndex:  { delay: 0, duration: 0 },
                 }
               : {
-                  // Outgoing: wait for incoming to finish, then snap invisible
                   opacity: { delay: FADE_DURATION, duration: 0 },
                   zIndex:  { delay: FADE_DURATION, duration: 0 },
                 }
@@ -138,8 +126,6 @@ const ProjectBackgrounds = memo(({ currentIndex }: { currentIndex: number }) => 
   </div>
 ));
 ProjectBackgrounds.displayName = "ProjectBackgrounds";
-
-// ─── Project logos ────────────────────────────────────────────────────────────
 
 const ProjectLogos = memo(({ currentIndex, mobile }: { currentIndex: number; mobile: boolean }) => (
   <div className={mobile
@@ -186,8 +172,6 @@ const ProjectLogos = memo(({ currentIndex, mobile }: { currentIndex: number; mob
 ));
 ProjectLogos.displayName = "ProjectLogos";
 
-// ─── Root ─────────────────────────────────────────────────────────────────────
-
 export default function Hero() {
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -200,16 +184,13 @@ export default function Hero() {
 
   return (
     <div className="w-full h-[60vh] relative overflow-hidden">
-      {/* Background */}
       <div className="absolute inset-0">
         <AktownSection />
         <ProjectBackgrounds currentIndex={currentIndex} />
       </div>
 
-      {/* Content */}
       <div className="relative z-10 w-full h-full">
 
-        {/* Mobile */}
         <div className="md:hidden h-full flex flex-col">
           <AktownBrand mobile />
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
@@ -218,7 +199,6 @@ export default function Hero() {
           <ProjectLogos currentIndex={currentIndex} mobile />
         </div>
 
-        {/* Desktop */}
         <div className="hidden md:flex items-center justify-center h-full px-8">
           <div className="flex items-center justify-center gap-0 w-full max-w-7xl">
             <AktownBrand mobile={false} />

@@ -1,6 +1,25 @@
-// ─── Types ───────────────────────────────────────────────────────────────────
+import {
+    createContext,
+    useContext,
+    useEffect,
+    useState,
+} from 'react';
+import type { ReactNode } from 'react';
+
+import {
+    birauylCardsKz,
+    birauylCardsRu,
+    type BirAuylCardSlug,
+} from './i18n/birauyl-cards';
 
 export type Lang = 'ru' | 'kz';
+
+export type BirAuylCardCopy = {
+    name: string;
+    description: string;
+    effect: string;
+};
+
 type TranslationShape = {
     nav: {
         instagram: string;
@@ -36,35 +55,38 @@ type TranslationShape = {
         statAge: string;
         ctaPrimary: string;
         ctaSecondary: string;
+        cardsHeading: string;
+        flipHint: string;
+        backAltSuffix: string;
+        emptyCards: string;
+        emptyCardsHint: string;
+        cardTypes: { character: string; datymBar: string };
+        cards: Record<BirAuylCardSlug, BirAuylCardCopy>;
+    };
+    seo: {
+        description: string;
     };
 };
 
-// ─── Translations ─────────────────────────────────────────────────────────────
-
 export const t: Record<Lang, TranslationShape> = {
     ru: {
-        // Navbar / shared
         nav: {
             instagram: 'Instagram',
         },
 
-        // Team section (team.tsx)
         team: {
             heading: 'Кто мы?',
             subheading: 'AKTOWN — это творческое объединение города Актау.',
             body: 'Мы — медиа-проект, объединяющий молодёжь. Создаём контент, организуем концерты и мероприятия. Вносим вклад в развитие общества через креативные проекты.',
         },
 
-        // Hero (hero.tsx) — no text-heavy strings, but kept for future use
         hero: {},
 
-        // Projects gallery (projects-gallery.tsx)
         projects: {
             heading: 'Наши проекты',
             photos: 'Фотографии',
         },
 
-        // Footer (footer.tsx)
         footer: {
             contactsHeading: 'Контакты',
             contactsBody:
@@ -80,7 +102,6 @@ export const t: Record<Lang, TranslationShape> = {
             copyright: 'барлық құқықтар қорғалған',
         },
 
-        // BirAuyl page
         birauyl: {
             badge: 'Карточная игра · AKTOWN',
             description:
@@ -90,6 +111,21 @@ export const t: Record<Lang, TranslationShape> = {
             statAge: 'Возраст',
             ctaPrimary: 'Заказать игру',
             ctaSecondary: 'Узнать больше',
+            cardsHeading: 'Карты',
+            flipHint: 'Нажми, чтобы перевернуть',
+            backAltSuffix: 'оборот',
+            emptyCards: 'Список карт пуст.',
+            emptyCardsHint: 'Добавь записи в',
+            cardTypes: {
+                character: 'Персонаж',
+                datymBar:  'Датым бар',
+            },
+            cards: birauylCardsRu,
+        },
+
+        seo: {
+            description:
+                'AKTOWN — Bir Auyl: настольная карточная игра о единстве и стратегии от творческого объединения Актау. Заказать игру, узнать правила и новости проекта.',
         },
     },
 
@@ -135,18 +171,24 @@ export const t: Record<Lang, TranslationShape> = {
             statAge: 'Жас',
             ctaPrimary: 'Ойын тапсырыс беру',
             ctaSecondary: 'Толығырақ',
+            cardsHeading: 'Карталар',
+            flipHint: 'Айналдыру үшін басыңыз',
+            backAltSuffix: 'артқы жағы',
+            emptyCards: 'Карталар тізімі бос.',
+            emptyCardsHint: 'Жазбаларды қосыңыз:',
+            cardTypes: {
+                character: 'Кейіпкер',
+                datymBar:  'Датым бар',
+            },
+            cards: birauylCardsKz,
+        },
+
+        seo: {
+            description:
+                'AKTOWN — Bir Auyl: Ақтау шығармашылық бірлестігінің бірлік пен стратегия туралы үстел карта ойыны. Ойын тапсырыс беру, ережелер мен жоба жаңалықтары.',
         },
     },
 };
-
-// ─── Context ──────────────────────────────────────────────────────────────────
-
-import {
-    createContext,
-    useContext,
-    useState,
-} from 'react';
-import type { ReactNode } from 'react';
 
 interface LangContextValue {
     lang: Lang;
@@ -168,6 +210,14 @@ export function LangProvider({ children }: { children: ReactNode }) {
         localStorage.setItem(STORAGE_KEY, l);
         setLangState(l);
     };
+
+    useEffect(() => {
+        document.documentElement.lang = lang === 'kz' ? 'kk' : 'ru';
+        const meta = document.querySelector('meta[name="description"]');
+        if (meta) {
+            meta.setAttribute('content', t[lang].seo.description);
+        }
+    }, [lang]);
 
     return (
         <LangContext.Provider value={{ lang, setLang, tr: t[lang] }}>

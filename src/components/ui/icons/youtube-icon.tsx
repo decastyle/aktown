@@ -75,7 +75,7 @@ const YoutubeIcon = forwardRef<AnimatedIconHandle, AnimatedIconProps>(
         strokeWidth={strokeWidth}
         strokeLinecap="round"
         strokeLinejoin="round"
-        className={`cursor-pointer ${className}`}
+        className={`block shrink-0 cursor-pointer ${className}`}
         onHoverStart={start}
         onHoverEnd={stop}
       >

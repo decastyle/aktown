@@ -2,238 +2,140 @@
 
 import { motion } from 'framer-motion';
 import { useNavigate } from '@tanstack/react-router';
-import { useMediaQuery } from '../hooks/useMediaQuery';
 
 import BirAuylLogo from '../assets/birauyl-logo.png';
 import BirAuylBgVideo from '../assets/birauyl-bg-loop.webm';
-import BoxVideo from "../assets/birauyl-box-loop.webm";
+import BoxVideo from '../assets/birauyl-box-loop.webm';
 
 import Navbar from './navbar';
 import { useLang } from '../i18n';
+import BirAuylCards from './birauylcards';
+
+const POSTER_BG  = '/placeholders/birauyl-bg-poster.jpg';
+const POSTER_BOX = '/placeholders/birauyl-box-poster.jpg';
+
+const PLACEHOLDER_PRIMARY_URL   = 'PLACEHOLDER_PRIMARY_URL';
+const PLACEHOLDER_SECONDARY_URL = 'PLACEHOLDER_SECONDARY_URL';
+
+const ctaBaseClass =
+    'inline-flex items-center justify-center min-h-11 px-6 rounded-full text-sm font-medium tracking-wide transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#e76d00]/40';
 
 export default function BirAuyl() {
     const navigate = useNavigate();
     const { tr } = useLang();
     const T = tr.birauyl;
-    
-    // Check if mobile for alignment logic (e.g., < 1024px)
-    const isMobile = useMediaQuery('(max-width: 1024px)');
-    // Temporary layout-tuning controls for the left box video.
-    const showBoxDebug = false;
-    const boxOffsetX = isMobile ? 30 : 30;
-    const boxOffsetY = isMobile ? -15 : -15;
 
     return (
         <>
             <Navbar onLogoClick={() => navigate({ to: '/' })} />
-            <div
-                style={{
-                    position: 'relative',
-                    width: '100%',
-                    // Changed to min-height to prevent content cutoff on small screens
-                    minHeight: '100vh', 
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    background: '#07101e',
-                    padding: '80px 24px', // Space for navbar and breathing room
-                    boxSizing: 'border-box',
-                    overflowX: 'hidden',
-                }}
-            >
-                {/* ── Background video ── */}
+            <div className="relative box-border flex min-h-screen w-full items-center justify-center overflow-x-hidden bg-[#2a1200] pt-20 pb-20 px-6">
+
                 <video
                     autoPlay muted loop playsInline
-                    style={{
-                        position: 'absolute',
-                        inset: 0,
-                        width: '100%',
-                        height: '100%',
-                        objectFit: 'cover',
-                        opacity: 0.92,
-                        filter: 'brightness(0.85)',
-                        zIndex: 0,
-                    }}
+                    preload="metadata"
+                    poster={POSTER_BG}
+                    className="absolute inset-0 z-0 h-full w-full object-cover opacity-[0.94] brightness-[0.88] contrast-[1.02] dark:opacity-[0.92] dark:brightness-[0.85] dark:contrast-100"
                 >
                     <source src={BirAuylBgVideo} type="video/webm" />
                 </video>
 
-                {/* ── Vignette ── */}
                 <div
-                    style={{
-                        position: 'absolute',
-                        inset: 0,
-                        pointerEvents: 'none',
-                        background: 'radial-gradient(ellipse 130% 100% at 50% 50%, transparent 25%, rgba(7,16,30,0.65) 100%)',
-                        zIndex: 1,
-                    }}
+                    aria-hidden
+                    className="pointer-events-none absolute inset-0 z-[1] bg-[radial-gradient(ellipse_115%_90%_at_50%_42%,rgba(255,252,248,0.62)_0%,rgba(255,245,235,0.22)_42%,rgba(55,40,32,0.42)_100%)] dark:bg-[radial-gradient(ellipse_130%_100%_at_50%_50%,transparent_22%,rgba(7,16,30,0.68)_100%)]"
                 />
 
-                {/* ── Content Container ── */}
-                <div
-                    style={{
-                        position: 'relative',
-                        zIndex: 10,
-                        display: 'flex',
-                        flexDirection: isMobile ? 'column' : 'row',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        gap: isMobile ? '50px' : 'clamp(32px, 6vw, 80px)',
-                        width: '100%',
-                        maxWidth: 1200,
-                    }}
-                >
-                    {/* LEFT — Box Video */}
+                <div className="relative z-10 flex w-full max-w-[1200px] flex-col items-center justify-center gap-12 lg:flex-row lg:items-center lg:gap-[clamp(32px,6vw,80px)]">
+
                     <motion.div
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-                        style={{
-                            flexShrink: 0,
-                            width: 'clamp(230px, 34vw, 460px)',
-                            position: 'relative',
-                            overflow: 'visible',
-                            outline: showBoxDebug ? '1px dashed rgba(56,189,248,0.95)' : 'none',
-                            background: showBoxDebug ? 'rgba(56,189,248,0.08)' : 'transparent',
-                        }}
+                        className="relative w-[clamp(230px,34vw,460px)] shrink-0 overflow-visible"
                     >
-                        {showBoxDebug && (
-                            <>
-                                <div
-                                    style={{
-                                        position: 'absolute',
-                                        inset: 0,
-                                        pointerEvents: 'none',
-                                        border: '1px solid rgba(56,189,248,0.55)',
-                                        zIndex: 3,
-                                    }}
-                                />
-                                <div
-                                    style={{
-                                        position: 'absolute',
-                                        top: '50%',
-                                        left: 0,
-                                        right: 0,
-                                        borderTop: '1px dashed rgba(56,189,248,0.7)',
-                                        pointerEvents: 'none',
-                                        zIndex: 3,
-                                    }}
-                                />
-                                <div
-                                    style={{
-                                        position: 'absolute',
-                                        left: '50%',
-                                        top: 0,
-                                        bottom: 0,
-                                        borderLeft: '1px dashed rgba(56,189,248,0.7)',
-                                        pointerEvents: 'none',
-                                        zIndex: 3,
-                                    }}
-                                />
-                            </>
-                        )}
                         <video
                             autoPlay muted loop playsInline
-                            style={{
-                                width: '100%',
-                                height: 'auto',
-                                objectFit: 'contain',
-                                transform: `translate(${boxOffsetX}px, ${boxOffsetY}px) scale(${isMobile ? 2 : 1.5})`,
-                                transformOrigin: 'center center',
-                                filter: 'drop-shadow(0 20px 50px rgba(0,0,0,0.5))',
-                            }}
+                            preload="none"
+                            poster={POSTER_BOX}
+                            className="h-auto w-full origin-center scale-[2] object-contain translate-x-[30px] -translate-y-[15px] drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)] lg:scale-150"
                         >
                             <source src={BoxVideo} type="video/webm" />
                         </video>
                     </motion.div>
 
-                    {/* RIGHT — Info Section */}
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.9, delay: 0.2 }}
-                        style={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            alignItems: isMobile ? 'center' : 'flex-start',
-                            textAlign: isMobile ? 'center' : 'left',
-                            maxWidth: 520,
-                        }}
+                        className="flex w-full max-w-[min(100%,36rem)] flex-col items-center text-center lg:max-w-[520px] lg:items-start lg:text-left"
                     >
-                        {/* Logo */}
-                        <motion.img
-                            src={BirAuylLogo}
-                            alt="Bir Auyl"
-                            style={{
-                                width: 'clamp(180px, 25vw, 320px)',
-                                marginBottom: 16,
-                                filter: 'drop-shadow(0 10px 20px rgba(0,0,0,0.3))',
-                            }}
-                        />
+                        <div className="
+                            flex w-full flex-col items-center gap-6 rounded-3xl px-6 py-8 sm:px-8 sm:py-9
+                            border border-[#e76d00]/15
+                            bg-white/90
+                            shadow-[0_12px_48px_rgba(140,60,0,0.16)]
+                            backdrop-blur-sm
+                            dark:border-white/10
+                            dark:bg-black/[0.30]
+                            dark:shadow-[0_20px_60px_rgba(0,0,0,0.4)]
+                            dark:backdrop-blur-xl
+                        ">
+                            <div className="flex w-full flex-col items-center gap-5 lg:items-start">
+                                <motion.img
+                                    src={BirAuylLogo}
+                                    alt="Bir Auyl"
+                                    className="w-[clamp(180px,25vw,300px)] drop-shadow-[0_2px_14px_rgba(140,60,0,0.18)] dark:drop-shadow-[0_10px_28px_rgba(0,0,0,0.45)]"
+                                />
+                                <span className="rounded-full border border-[#e76d00]/20 bg-[#e76d00]/06 px-3.5 py-1.5 text-[10px] font-medium uppercase tracking-[0.22em] text-[#7a3800]/80 dark:border-white/15 dark:bg-white/5 dark:text-[#ffe4c0]/55">
+                                    {T.badge}
+                                </span>
+                            </div>
 
-                        {/* Badge */}
-                        <span style={{
-                            fontFamily: 'Kinetika, sans-serif',
-                            fontSize: 10,
-                            letterSpacing: '0.22em',
-                            textTransform: 'uppercase',
-                            color: 'rgba(255,255,255,0.5)',
-                            marginBottom: 24,
-                            padding: '6px 14px',
-                            border: '1px solid rgba(255,255,255,0.15)',
-                            borderRadius: 100,
-                            background: 'rgba(255,255,255,0.05)',
-                            backdropFilter: 'blur(10px)',
-                        }}>
-                            {T.badge}
-                        </span>
-                        
-                        {/* Description */}
-                        <p style={{
-                            fontFamily: 'Kinetika, sans-serif',
-                            fontSize: 'clamp(15px, 1.2vw, 18px)',
-                            lineHeight: 1.6,
-                            color: 'rgba(255,255,255,0.7)',
-                            marginBottom: 32,
-                            maxWidth: isMobile ? '90%' : '100%',
-                        }}>
-                            {T.description}
-                        </p>
+                            <p className="aktown-readable mx-auto max-w-[90%] text-pretty text-base leading-[1.65] text-[#1c0d00]/88 sm:text-base lg:mx-0 lg:max-w-full dark:text-[#ffe4c0]/85">
+                                {T.description}
+                            </p>
 
-                        {/* Stats Table-like Layout */}
-                        <div style={{
-                            display: 'flex',
-                            gap: isMobile ? '30px' : '40px',
-                            padding: '20px 0',
-                            borderTop: '1px solid rgba(255,255,255,0.1)',
-                            borderBottom: '1px solid rgba(255,255,255,0.1)',
-                            width: '100%',
-                            justifyContent: isMobile ? 'center' : 'flex-start'
-                        }}>
-                            {[
-                                { value: '8–12', label: T.statPlayers },
-                                { value: '20м', label: T.statTime },
-                                { value: '12+', label: T.statAge },
-                            ].map((s) => (
-                                <div key={s.label} style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-                                    <span style={{
-                                        fontFamily: 'Kinetika, sans-serif',
-                                        fontSize: 'clamp(22px, 2vw, 28px)',
-                                        fontWeight: 500,
-                                        color: '#fff',
-                                    }}>{s.value}</span>
-                                    <span style={{
-                                        fontSize: 9,
-                                        letterSpacing: '0.1em',
-                                        textTransform: 'uppercase',
-                                        color: 'rgba(255,255,255,0.4)',
-                                    }}>{s.label}</span>
-                                </div>
-                            ))}
+                            <div className="grid w-full grid-cols-3 gap-3 border-y border-[#e76d00]/15 py-6 sm:gap-4 sm:py-7 dark:border-white/12">
+                                {[
+                                    { value: '6–20', label: T.statPlayers },
+                                    { value: '20м',  label: T.statTime    },
+                                    { value: '12+',  label: T.statAge     },
+                                ].map((s, i) => (
+                                    <div
+                                        key={s.label}
+                                        className={`flex min-w-0 flex-col gap-1 text-center lg:text-left ${
+                                            i > 0 ? 'border-l border-[#e76d00]/15 pl-3 sm:pl-4 dark:border-white/12' : ''
+                                        }`}
+                                    >
+                                        <span className="text-[clamp(1.25rem,2.2vw,1.65rem)] font-semibold tabular-nums tracking-tight text-[#1c0d00] dark:text-[#ffe4c0]">
+                                            {s.value}
+                                        </span>
+                                        <span className="text-[9px] uppercase leading-tight tracking-[0.12em] text-[#1c0d00]/50 dark:text-[#ffe4c0]/45">
+                                            {s.label}
+                                        </span>
+                                    </div>
+                                ))}
+                            </div>
+
+                            <div className="flex w-full flex-col gap-3 sm:flex-row sm:justify-center lg:justify-start">
+                                <a
+                                    href={PLACEHOLDER_PRIMARY_URL}
+                                    className={`${ctaBaseClass} bg-[#e76d00] text-white hover:bg-[#c85e00]`}
+                                >
+                                    {T.ctaPrimary}
+                                </a>
+                                <a
+                                    href={PLACEHOLDER_SECONDARY_URL}
+                                    className={`${ctaBaseClass} border border-[#1c0d00]/20 bg-transparent text-[#1c0d00] hover:bg-[#1c0d00]/05 dark:border-white/20 dark:bg-white/5 dark:text-[#ffe4c0] dark:hover:bg-white/10`}
+                                >
+                                    {T.ctaSecondary}
+                                </a>
+                            </div>
                         </div>
                     </motion.div>
                 </div>
             </div>
+
+            <BirAuylCards />
         </>
     );
 }
