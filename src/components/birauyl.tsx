@@ -16,14 +16,14 @@ const POSTER_BG = '/placeholders/birauyl-bg-poster.jpg';
 const POSTER_BOX = '/placeholders/birauyl-box-poster.jpg';
 
 // Fixed URLs with protocols to prevent router interception
-const PLACEHOLDER_PRIMARY_URL = 'https://clck.ru/3ReSWQ';
-const PLACEHOLDER_SECONDARY_URL = 'https://www.instagram.com/birauyl/';
-const PLACEHOLDER_KASPI_URL = 'https://l.kaspi.kz/shop/whCeM8CTjYv3zcY';
+// const PLACEHOLDER_PRIMARY_URL = 'https://clck.ru/3ReSWQ';
+// const PLACEHOLDER_SECONDARY_URL = 'https://www.instagram.com/birauyl/';
+// const PLACEHOLDER_KASPI_URL = 'https://l.kaspi.kz/shop/whCeM8CTjYv3zcY';
 
 const ctaBaseClass =
     'inline-flex items-center gap-2 justify-center min-h-11 px-5 rounded-full text-sm font-medium tracking-wide transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#e76d00]/40 active:scale-95';
 
-const KASPI_RED = 'bg-[#f14635] hover:bg-[#d63a2c] text-white';
+// const KASPI_RED = 'bg-[#f14635] hover:bg-[#d63a2c] text-white';
 
 export default function BirAuyl() {
     const navigate = useNavigate();
@@ -171,4 +171,3 @@ export default function BirAuyl() {
         </>
     );
 }
-
