@@ -248,7 +248,7 @@ export default function BirAuylCards() {
         <section className="w-full py-16 lg:py-24 overflow-hidden">
             <div className="flex flex-col gap-10 md:gap-12">
                 <header className="mx-auto flex max-w-3xl flex-col items-center gap-4 px-4 text-center sm:px-6 md:gap-6 lg:px-8">
-                    <h2 className="text-3xl font-medium tracking-tight text-balance text-[#1c0d00] dark:text-[#ffe4c0] md:text-5xl lg:text-6xl">
+                    <h2 className="text-4xl font-medium tracking-tight text-balance text-[#1c0d00] dark:text-[#ffe4c0] md:text-6xl lg:text-7xl">
                         {B.cardsHeading}
                     </h2>
                 </header>
